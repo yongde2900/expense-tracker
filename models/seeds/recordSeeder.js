@@ -1,6 +1,7 @@
 
 const db = require('../../config/mongoose')
 const Record = require('../Record')
+const Category = require('../Category')
 const recordData = [
     {
     name: '午餐',
@@ -34,8 +35,13 @@ const recordData = [
     }
 ]
 
-db.once('open', () => {
+db.once('open', async () => {
     console.log('execute recordSeeder')
+    const categories = await Category.find().lean()
+    for( const records of recordData){
+        targetId = categories.find(category => records.category === category.name)._id
+        records.category = targetId
+    }  
     Record.insertMany(recordData)
         .then( () => db.close())
     console.log('Done')

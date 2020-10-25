@@ -7,8 +7,9 @@ const RecordSchema = new Schema({
         require: true
     },
     category: {
-        type: String,
-        require: true
+        type: Schema.Types.ObjectId,
+        require: true,
+        ref: 'Category'
     },
     date: {
         type: Date,
