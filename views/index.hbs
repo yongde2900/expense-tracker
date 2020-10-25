@@ -1,1 +1,38 @@
-<h1>nothing</h1>
+{{!-- drop down --}}
+<div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      類別
+  </a>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      {{#each categories}}
+    <a class="dropdown-item" href="#">{{this.name}}</a>
+    {{/each}}
+  </div>
+</div>
+{{!-- total amount --}}
+
+{{!-- list --}}
+<div class="container">
+    {{#each records}}
+    <div class="expense">
+        <div class="icon">
+            <i class="{{this.category.icon}}"></i>
+        </div>
+        <div class="content">
+            <h3 class="titile">{{this.name}}</h3>
+            <p>{{this.date}}</p>
+        </div>
+        <div class="amount">
+            <p>{{this.amount}}</p>
+        </div>
+        <div class="function_area">
+
+        </div>
+    </div>
+    {{/each}}
+
+    <div class="create">
+        <a href="/expense/new">新增支出</a>
+    </div>
+</div>
