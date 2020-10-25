@@ -43,4 +43,13 @@ router.put('/:_id', async(req, res) => {
         .then( () => res.redirect('/'))
         .catch( error => console.log(error))
 })
+
+router.delete('/:_id', async(req ,res) => {
+    const _id = req.params._id
+    return Record.findById(_id)
+        .then( record => record.remove())
+        .then( () => res.redirect('/'))
+        .catch( error => console.log(error))
+})
+
 module.exports = router
