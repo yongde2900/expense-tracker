@@ -21,10 +21,8 @@ const categoryData = [{
     icon: 'fas fa-pen'
 }]
 db.once('open', () => {
-    Category.insertMany(categoryData, (error) => {
-        if(error){
-            return console.error(error)
-        }
-    })
+    console.log('execute categorySeeder')
+    Category.insertMany(categoryData)
+        .then( () => db.close())
     console.log('Done')
 })
