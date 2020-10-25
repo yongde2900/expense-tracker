@@ -1,41 +1,47 @@
 {{!-- drop down --}}
-<div class="dropdown">
-  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      類別
-  </a>
+<div class="container d-flex flex-column align-items-center mt-5">
+    <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            類別
+        </a>
 
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      {{#each categories}}
-    <a class="dropdown-item" href="/?_id={{this._id}}">{{this.name}}</a>
-    {{/each}}
-  </div>
-</div>
-{{!-- total amount --}}
-<h1>總金額：{{totalAmount}}</h1>
-{{!-- list --}}
-<div class="container">
-    {{#each records}}
-    <div class="expense">
-        <div class="icon">
-            <i class="{{this.category.icon}}"></i>
-        </div>
-        <div class="content">
-            <h3 class="titile">{{this.name}}</h3>
-            <p>{{this.date}}</p>
-        </div>
-        <div class="amount">
-            <p>{{this.amount}}</p>
-        </div>
-        <div class="function_area">
-            <a href="expense/{{this._id}}/edit">修改</a>
-            <form action="expense/{{ this._id }}?_method=DELETE" method="POST">
-                  <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{#each categories}}
+            <a class="dropdown-item" href="/?_id={{this._id}}">{{this.name}}</a>
+            {{/each}}
         </div>
     </div>
-    {{/each}}
+    {{!-- total amount --}}
+    <div class="total-amount mt-4">
+        <h5>總金額:</h3>
+            <h1>{{totalAmount}}</h1>
+    </div>
+    {{!-- list --}}
+    <div class="container mt-5">
+        {{#each records}}
+        <div class="expense row my-2">
+            <div class="icon col-3">
+                <i class="{{this.category.icon}}"></i>
+            </div>
+            <div class="content col-4">
+                <h3 class="titile">{{this.name}}</h3>
+                <p>{{this.date}}</p>
+            </div>
+            <div class="amount col-2 align-items-center d-flex" >
+                <h3>{{this.amount}}</h3>
+            </div>
+            <div class="function_area col-3 d-flex flex-row align-items-center">
+                <a href="expense/{{this._id}}/edit">修改</a>
+                <form action="expense/{{ this._id }}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-link">刪除</button>
+                </form>
+            </div>
+        </div>
+        {{/each}}
 
-    <div class="create">
-        <a href="/expense/new">新增支出</a>
+        <div class="create row d-flex align-items-center flex-column mt-3">
+            <a href="/expense/new" class="btn btn-warning ">新增支出</a>
+        </div>
     </div>
 </div>

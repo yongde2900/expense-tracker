@@ -1,0 +1,16 @@
+.container{
+    width: 800px;
+}
+.total-amount{
+    width: 300px;
+}
+.total-amount h1 {
+    text-align: right;
+    color:#E4885B;
+}
+.fas{
+    font-size: 60px;
+}
+.btn-warning{
+    text-align: center;
+}

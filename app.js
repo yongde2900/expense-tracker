@@ -13,6 +13,7 @@ app.engine('hbs', exphbs({defaultLayout: 'main', extname: 'hbs'}))
 app.set('view engine', 'hbs')
 
 //
+app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(routes)
 
