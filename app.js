@@ -5,7 +5,7 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
 require('./config/mongoose')
-const port = 3000
+const PORT = process.env.PORT || 3000
 const routes = require('./routes')
 
 // Setting template engine
@@ -21,6 +21,6 @@ app.use(routes)
 
 
 // Start and listen on express server
-app.listen(port, ()=>{
-    console.log(`Server is listening on http://localhost:${port}`)
+app.listen(PORT, ()=>{
+    console.log(`Server is listening on http://localhost:${PORT}`)
 })
