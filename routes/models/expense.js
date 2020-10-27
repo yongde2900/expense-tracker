@@ -12,7 +12,7 @@ router.get('/new', (req, res) => {
 router.post('/', async(req, res) => {
     const newExpense = req.body
     const categories = await Category.find().lean()
-    const targetId = categories.find( category => category.name === newExpense.category)._id
+    const targetId = categories.filter( category => category.name === newExpense.category)[0]
     newExpense.category = targetId
     await Record.create(newExpense)
     res.redirect('/')
@@ -30,7 +30,7 @@ router.put('/:_id', async(req, res) => {
     const newExpense = req.body
     const categories = await Category.find().lean()
     let record = await Record.findById(_id)
-    const targetId = categories.find( category => category.name === newExpense.category)._id
+    const targetId = categories.filter( category => category.name === newExpense.category)[0]
     newExpense.category = targetId
     record = Object.assign(record , newExpense)
     await record.save()
