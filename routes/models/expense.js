@@ -3,9 +3,10 @@ const Category = require('../../models/Category')
 const Record = require('../../models/Record')
 const router = express.Router()
 
-router.get('/new', async(req, res) => {
-    const categories = await Category.find().lean()
-    res.render('new',{categories})
+router.get('/new', (req, res) => {
+    Category.find()
+        .lean()
+        .then( category => res.render('new', { category }))
 })
 
 router.post('/', async(req, res) => {
@@ -13,35 +14,27 @@ router.post('/', async(req, res) => {
     const categories = await Category.find().lean()
     const targetId = categories.find( category => category.name === newExpense.category)._id
     newExpense.category = targetId
-    return Record.create(newExpense)
-        .then( () => res.redirect('/'))
-        .catch( error => console.log(error))
+    await Record.create(newExpense)
+    res.redirect('/')
 })
 
 router.get('/:_id/edit', async(req ,res) => {
-    const _id =req.params._id
+    const _id = req.params._id
     const categories = await Category.find().lean()
-    Record.findById(_id)
-        .lean()
-        .then( record => {
-            res.render('edit', { record, categories})
-        })
-        .catch(error => console.log(error))
+    const record = await Record.findById(_id).lean()
+    res.render('edit', { record, categories})
 })
 
 router.put('/:_id', async(req, res) => {
     const _id = req.params._id
     const newExpense = req.body
     const categories = await Category.find().lean()
+    let record = await Record.findById(_id)
     const targetId = categories.find( category => category.name === newExpense.category)._id
     newExpense.category = targetId
-    return Record.findById(_id)
-        .then( record => {
-            record = Object.assign(record , newExpense)
-            return record.save()
-        })
-        .then( () => res.redirect('/'))
-        .catch( error => console.log(error))
+    record = Object.assign(record , newExpense)
+    await record.save()
+    res.redirect('/')
 })
 
 router.delete('/:_id', async(req ,res) => {
