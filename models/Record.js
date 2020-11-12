@@ -12,12 +12,18 @@ const RecordSchema = new Schema({
         ref: 'Category'
     },
     date: {
-        type: String,
+        type: Date,
         require: true
     },
     amount: {
         type: Number,
         require: true
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+        index: true,
+        required: true
     }
 })
 
