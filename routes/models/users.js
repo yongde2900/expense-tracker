@@ -5,6 +5,10 @@ const passport = require('passport')
 const router = express.Router()
 const saltRounds = 10
 
+router.get('/ss', (req, res) => {
+    res.send('aaa')
+})
+
 router.get('/login', (req, res) => {
     res.render('login')
 })
@@ -12,7 +16,6 @@ router.get('/login', (req, res) => {
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/users/login',
-    failureFlash: true
 }))
 
 router.get('/logout', (req, res) => {

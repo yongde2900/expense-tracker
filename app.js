@@ -4,6 +4,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
+const session = require('express-session')
 require('./config/mongoose')
 const PORT = process.env.PORT || 3000
 const routes = require('./routes')
@@ -16,7 +17,17 @@ app.set('view engine', 'hbs')
 //
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(session({
+    secret: 'ThisIsMySecret',
+    resave: false,
+    saveUninitialized: true
+  }))
 usePassport(app)
+app.use((req,res, next) =>{
+    res.locals.isAuthenticated = req.isAuthenticated()
+    res.locals.user = req.user
+    next()
+})
 app.use(routes)
 
 
