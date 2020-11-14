@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
 const session = require('express-session')
+const flash = require('connect-flash')
 require('./config/mongoose')
 const PORT = process.env.PORT || 3000
 const routes = require('./routes')
@@ -23,9 +24,13 @@ app.use(session({
     saveUninitialized: true
   }))
 usePassport(app)
+app.use(flash())
 app.use((req,res, next) =>{
     res.locals.isAuthenticated = req.isAuthenticated()
     res.locals.user = req.user
+    res.locals.success_msg = req.flash('success_msg')
+    res.locals.warning_msg = req.flash('warning_msg')
+    res.locals.warning_msg = req.flash('error')
     next()
 })
 app.use(routes)
