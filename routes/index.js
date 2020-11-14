@@ -4,10 +4,11 @@ const router = express.Router()
 const home = require('./models/home')
 const expense = require('./models/expense')
 const users = require('./models/users')
+const {authenticator} = require('../middleware/auth')
 
 router.use(methodOverride('_method'))
-router.use('/', home)
-router.use('/expense', expense)
+router.use('/expense',authenticator, expense)
 router.use('/users', users)
+router.use('/',authenticator, home)
 
 module.exports = router
