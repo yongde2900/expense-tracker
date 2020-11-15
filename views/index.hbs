@@ -19,19 +19,37 @@
     </div>
     {{!-- list --}}
     <div class="container mt-5">
+        <div class="expense row mb-5">
+            <div class="icon col-2">
+                <h2>類別</h2>
+            </div>
+            <div class="content col-3">
+                <h2 class="titile">品項</h2>
+            </div>
+            <div class="col-3 align-items-center d-flex" >
+                <h2>商家</h2>
+            </div>
+            <div class="amount col-2 align-items-center d-flex flex-nowrap" >
+                <h2>金額</h2>
+            </div>
+            
+        </div>
         {{#each record}}
         <div class="expense row my-2">
-            <div class="icon col-3">
+            <div class="icon col-2">
                 <i class="{{this.category.icon}}"></i>
             </div>
-            <div class="content col-4">
+            <div class="content col-3">
                 <h3 class="titile">{{this.name}}</h3>
                 <p>{{this.date}}</p>
             </div>
-            <div class="amount col-2 align-items-center d-flex" >
-                <h3>{{this.amount}}</h3>
+            <div class="col-3 align-items-top d-flex" >
+                <h4>{{this.merchant}}</h3>
             </div>
-            <div class="function_area col-3 d-flex flex-row align-items-center">
+            <div class="amount col-2 align-items-top d-flex" >
+                <h4>{{this.amount}}</h3>
+            </div>
+            <div class="function_area col-2 d-flex flex-row align-items-center mb-5">
                 <a href="expense/{{this._id}}/edit">修改</a>
                 <form action="expense/{{ this._id }}?_method=DELETE" method="POST">
                     <button type="submit" class="btn btn-link">刪除</button>
@@ -39,9 +57,5 @@
             </div>
         </div>
         {{/each}}
-
-        <div class="create row d-flex align-items-center flex-column mt-3">
-            <a href="/expense/new" class="btn btn-warning ">新增支出</a>
-        </div>
     </div>
 </div>

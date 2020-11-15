@@ -49,7 +49,7 @@ router.put('/:_id', (req, res) => {
         .then(category => {
             Record.findById(_id)
                 .then(record => {
-                    console.log('@@!',newExpense.category, category)
+                    console.log('@@!',newExpense, category)
                     newExpense.category = category._id
                     record = Object.assign(record, newExpense)
                     record.save()
