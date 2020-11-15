@@ -6,6 +6,9 @@ const bodyParser = require('body-parser')
 const app = express()
 const session = require('express-session')
 const flash = require('connect-flash')
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+  }
 require('./config/mongoose')
 const PORT = process.env.PORT || 3000
 const routes = require('./routes')
@@ -19,7 +22,7 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
-    secret: 'ThisIsMySecret',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
   }))
