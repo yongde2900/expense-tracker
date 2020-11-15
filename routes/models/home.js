@@ -1,26 +1,37 @@
 const express = require('express')
 const router = express.Router()
+const {dateFormat} = require('../../utilities/utility')
 const Record = require('../../models/Record')
 const Category = require('../../models/Category')
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
     const _id = req.query._id
-    let records
+    const userId = req.user._id
     let totalAmount = 0
-    if (!_id) {
-        records = await Record.find().populate('category', 'name icon').lean()
-        for(record of records){
-            totalAmount += record.amount
-        }
-    } else {
-        const categoryName = await Category.findById(_id).lean()
-        records = await Record.find({ category: categoryName }).populate('category', 'name icon').lean()
-        for(record of records){
-            totalAmount += record.amount
-        }
-    }
-    const categories = await Category.find().lean()
-    res.render('index', { records, categories, totalAmount })
+    Record.find({userId})
+        .populate('category', 'name icon')
+        .lean()
+        .then(record => {
+            Category.find()
+                .lean()
+                .then(category => {
+                    if (!_id) {
+                        record.forEach(record => {
+                            totalAmount += record.amount
+                            record = dateFormat(record)
+                        })
+                    }else{
+                        record = record.filter(select => {
+                            return String(select.category._id) === _id})
+                        record.forEach(record => {
+                            totalAmount += record.amount
+                            record = dateFormat(record)
+                        })
+                    }
+                    res.render('index', {record, category, totalAmount})
+                })
+        })
+
 })
 
 module.exports = router

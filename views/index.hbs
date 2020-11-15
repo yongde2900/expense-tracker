@@ -7,7 +7,7 @@
         </a>
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            {{#each categories}}
+            {{#each category}}
             <a class="dropdown-item" href="/?_id={{this._id}}">{{this.name}}</a>
             {{/each}}
         </div>
@@ -19,7 +19,7 @@
     </div>
     {{!-- list --}}
     <div class="container mt-5">
-        {{#each records}}
+        {{#each record}}
         <div class="expense row my-2">
             <div class="icon col-3">
                 <i class="{{this.category.icon}}"></i>
