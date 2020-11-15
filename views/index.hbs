@@ -1,16 +1,29 @@
 {{!-- drop down --}}
 <div class="container d-flex flex-column align-items-center mt-5">
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            類別
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            {{#each category}}
-            <a class="dropdown-item" href="/?_id={{this._id}}">{{this.name}}</a>
-            {{/each}}
-        </div>
+    <div class="search-bar bg-light">
+        <form action="/expense/filter" method="POST" class="form-inline">
+            <div class="form-group">
+                <select name="category" id="category" class="form-control mx-2">
+                    <option value="">類別</option>
+                    {{#each category}}
+                    <option value="{{this._id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group mx-2">
+                <label for="startDate">
+                    <h4>從：</h4>
+                </label>
+                <input type="date" id="startDate" name="startDate" class="fomr-control" value="{{date.$gte}}">
+            </div>
+            <div class="form-group mx-2">
+                <label for="endDate">
+                    <h4>至:</h4>
+                </label>
+                <input type="date" id="endDate" name="endDate" class="fomr-control" value="{{date.$lte}}">
+            </div>
+            <button type="submit" class="btn btn-secondary mx-2">搜尋</button>
+        </form>
     </div>
     {{!-- total amount --}}
     <div class="total-amount mt-4">
@@ -26,13 +39,13 @@
             <div class="content col-3">
                 <h2 class="titile">品項</h2>
             </div>
-            <div class="col-3 align-items-center d-flex" >
+            <div class="col-3 align-items-center d-flex">
                 <h2>商家</h2>
             </div>
-            <div class="amount col-2 align-items-center d-flex flex-nowrap" >
+            <div class="amount col-2 align-items-center d-flex flex-nowrap">
                 <h2>金額</h2>
             </div>
-            
+
         </div>
         {{#each record}}
         <div class="expense row my-2">
@@ -43,10 +56,10 @@
                 <h3 class="titile">{{this.name}}</h3>
                 <p>{{this.date}}</p>
             </div>
-            <div class="col-3 align-items-top d-flex" >
+            <div class="col-3 align-items-top d-flex">
                 <h4>{{this.merchant}}</h3>
             </div>
-            <div class="amount col-2 align-items-top d-flex" >
+            <div class="amount col-2 align-items-top d-flex">
                 <h4>{{this.amount}}</h3>
             </div>
             <div class="function_area col-2 d-flex flex-row align-items-center mb-5">
